@@ -1,4 +1,4 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { getRandomNumber, getRandomWord } from "../../utils/utils";
 
@@ -25,10 +25,13 @@ export const answerSlice = createSlice({
       state.word = getRandomWord();
       state.tries = getRandomNumber();
     },
+    guessAnswer: (state) => {
+      state.tries -= 1;
+    },
   },
 });
 
-export const { newAnswer } = answerSlice.actions;
+export const { newAnswer, guessAnswer } = answerSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

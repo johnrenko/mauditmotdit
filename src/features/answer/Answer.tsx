@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
+import { resetGuesses } from "../guess/guessSlice";
 import { newAnswer, selectAnswerTries, selectAnswerWord } from "./answerSlice";
 
 export default function Answer() {
@@ -7,12 +7,16 @@ export default function Answer() {
   const tries = useAppSelector(selectAnswerTries);
   const dispatch = useAppDispatch();
 
+  const handleClick = () => {
+    dispatch(resetGuesses());
+    dispatch(newAnswer());
+  };
 
   return (
     <div>
       <p>{answer}</p>
       <p>{tries}</p>
-      <button onClick={() => dispatch(newAnswer())}>Refresh</button>
+      <button onClick={handleClick}>Refresh</button>
     </div>
   );
 }
