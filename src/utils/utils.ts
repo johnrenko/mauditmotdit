@@ -9,7 +9,16 @@ export function getRandomNumber(): number {
 }
 
 export function getRandomWord(): string {
-  return capitalize(
-    words.valid[Math.floor(Math.random() * words.valid.length) + 1]
-  );
+  return capitalize(words[Math.floor(Math.random() * words.length) + 1]);
+}
+
+export function stripAccents(str: string) {
+  return str
+    .replace(/[àáâãäåâ]/g, "a")
+    .replace(/[èéêë]/g, "e")
+    .replace(/[ìíîï]/g, "i")
+    .replace(/[òóôõö]/g, "o")
+    .replace(/[ùúûü]/g, "u")
+    .replace(/[ýÿ]/g, "y")
+    .replace(/[çćč]/g, "c");
 }
