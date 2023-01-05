@@ -1,12 +1,12 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectTips } from "./tipsSlice";
+import { selectTipsValue } from "./tipsSlice";
 
 export default function TipsList() {
-  const tips = useAppSelector(selectTips);
+  const tips = useAppSelector(selectTipsValue);
 
   return (
     <ul>
-      {tips.values.map((tip, index) => (
+      {tips.map((tip, index) => (
         <li key={index}>{tip}</li>
       ))}
     </ul>

@@ -7,6 +7,7 @@ import {
   guessAnswer,
   selectAnswerTries,
 } from "../answer/answerSlice";
+import { resetGivenTip } from "../tips/tipsSlice";
 
 export default function Guess() {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export default function Guess() {
         })
       );
       dispatch(guessAnswer());
+      dispatch(resetGivenTip());
       inputRef.current.value = "";
     }
   };
