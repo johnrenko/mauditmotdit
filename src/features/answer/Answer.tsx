@@ -1,6 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { resetGuesses } from "../guess/guessSlice";
 import { newAnswer, selectAnswerTries, selectAnswerWord } from "./answerSlice";
+import { resetTips } from "../tips/tipsSlice";
 
 export default function Answer() {
   const answer = useAppSelector(selectAnswerWord);
@@ -10,6 +11,7 @@ export default function Answer() {
   const handleClick = () => {
     dispatch(resetGuesses());
     dispatch(newAnswer());
+    dispatch(resetTips());
   };
 
   return (

@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import answerReducer from "../features/answer/answerSlice";
 import guessReducer from "../features/guess/guessSlice";
+import tipsReducer from "../features/tips/tipsSlice";
 
 export const store = configureStore({
   reducer: {
     answer: answerReducer,
     guess: guessReducer,
+    tips: tipsReducer,
   },
 });
 
