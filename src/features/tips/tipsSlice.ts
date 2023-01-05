@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface Tips {
+export interface TipsState {
   values: string[];
   hasGivenTip: boolean;
 }
 
-const initialState: Tips = {
+const initialState: TipsState = {
   values: [],
   hasGivenTip: false,
 };
