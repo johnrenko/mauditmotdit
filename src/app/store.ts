@@ -1,15 +1,22 @@
 import { createClient } from "@liveblocks/client";
 import { liveblocksEnhancer } from "@liveblocks/redux";
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import answerReducer from "../features/answer/answerSlice";
-import guessReducer from "../features/guess/guessSlice";
-import tipsReducer from "../features/tips/tipsSlice";
-import playerReducer from "../features/players/playerSlice";
+import answerReducer, { AnswerState } from "../features/answer/answerSlice";
+import guessReducer, { GuessState } from "../features/guess/guessSlice";
+import tipsReducer, { TipsState } from "../features/tips/tipsSlice";
+import playerReducer, { PlayerState } from "../features/players/playerSlice";
 
 const client = createClient({
   publicApiKey:
     "pk_dev_j-Jgb23UDMI8zn8Cuc_4pjAX_8-hJFXhEQF2onxZE_MhagEGMZjAuYkOllmZFCnk",
 });
+
+type State = {
+  answer: AnswerState;
+  guess: GuessState;
+  tips: TipsState;
+  player: PlayerState;
+};
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +26,7 @@ export const store = configureStore({
     player: playerReducer,
   },
   enhancers: [
-    liveblocksEnhancer({
+    liveblocksEnhancer<State>({
       client,
       presenceMapping: { player: true },
       storageMapping: { answer: true, guess: true, tips: true },

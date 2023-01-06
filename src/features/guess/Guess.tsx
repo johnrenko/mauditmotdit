@@ -8,6 +8,7 @@ import {
   selectAnswerTries,
 } from "../answer/answerSlice";
 import { resetGivenTip } from "../tips/tipsSlice";
+import { addGuess } from "../players/playerSlice";
 
 export default function Guess() {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ export default function Guess() {
       );
       dispatch(guessAnswer());
       dispatch(resetGivenTip());
+      dispatch(addGuess(inputRef.current.value))
       inputRef.current.value = "";
     }
   };

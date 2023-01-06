@@ -3,19 +3,18 @@ import "./App.css";
 
 import { actions } from "@liveblocks/redux";
 
-import { useAppDispatch } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Answer from "./features/answer/Answer";
 import Guess from "./features/guess/Guess";
 import GuessList from "./features/guess/GuessList";
 import Tips from "./features/tips/Tips";
 import TipsList from "./features/tips/TipsList";
 import PlayersList from "./features/players/PlayersList";
-import { useSelector } from "react-redux";
 import PlayerCreator from "./features/players/PlayerCreator";
 
 function App() {
   const dispatch = useAppDispatch();
-  const connection = useSelector(
+  const connection = useAppSelector(
     (state: any) => state.liveblocks.isStorageLoading
   );
 
