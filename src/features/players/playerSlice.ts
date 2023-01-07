@@ -7,6 +7,7 @@ export interface PlayerState {
   triesLeft: number;
   isWinner: boolean;
   isGuessing: boolean;
+  hasGuessed: boolean;
 }
 
 const initialState: PlayerState = {
@@ -15,6 +16,7 @@ const initialState: PlayerState = {
   triesLeft: 0,
   isWinner: false,
   isGuessing: true,
+  hasGuessed: false,
 };
 
 export const PlayerSlice = createSlice({
@@ -36,15 +38,17 @@ export const PlayerSlice = createSlice({
     isGuesser: (state) => {
       state.isGuessing = true;
     },
-    addGuess: (state, action: PayloadAction<string>) => {
+    addUserGuess: (state, action: PayloadAction<string>) => {
       state.guesses.push(action.payload);
       state.triesLeft--;
+      state.hasGuessed = true;
     },
     resetUser: (state) => {
       state.guesses = [];
       state.triesLeft = 0;
       state.isWinner = false;
       state.isGuessing = true;
+      state.hasGuessed = false;
     },
   },
 });
@@ -55,7 +59,7 @@ export const {
   hasWon,
   isDriver,
   isGuesser,
-  addGuess,
+  addUserGuess,
   resetUser,
 } = PlayerSlice.actions;
 
@@ -65,5 +69,7 @@ export const selectUserGuesses = (state: RootState) => state.player.guesses;
 export const selectUserIsGuessing = (state: RootState) =>
   state.player.isGuessing;
 export const selectUserWin = (state: RootState) => state.player.isWinner;
+export const selectUserHasGuessed = (state: RootState) =>
+  state.player.hasGuessed;
 
 export default PlayerSlice.reducer;

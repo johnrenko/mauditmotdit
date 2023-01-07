@@ -1,0 +1,40 @@
+.answerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.answer {
+  font-size: 60px;
+  margin-right: 30px;
+}
+
+h2 {
+  font-size: 30px;
+  height: 30px;
+  margin: 10px;
+  margin-left: 0px;
+}
+
+.answerContainer {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+.tries {
+  font-size: 100px;
+  font-weight: 900;
+  color: #808080;
+}

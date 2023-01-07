@@ -1,39 +1,51 @@
-.App {
-  text-align: center;
-}
+@import url("https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;800&display=swap");
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: 20px auto;
+  width: fit-content;
+}
+
+h2 {
+  text-align: left;
+}
+
+.App {
+  text-align: center;
+  font-family: "Abhaya Libre", serif;
+}
+
+.answerHighLevel {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+button {
+  background-color: #2d9cdb;
+  color: #fff;
+  border-radius: 5px;
+  font-family: "Abhaya Libre", serif;
+  font-size: 30px;
+  border: none;
+  cursor: pointer;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+button:hover {
+  background-color: #1f80b7;
+}
+
+input {
+  font-family: "Abhaya Libre", serif;
+  font-size: 30px;
+  border: none;
+}
+
+.inputBox {
+  display: flex;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  height: 40px;
+  padding: 5px;
+  border-radius: 10px;
 }

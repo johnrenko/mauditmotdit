@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { newName, selectUserName } from "./playerSlice";
+import { actions } from "@liveblocks/redux";
 
 export default function PlayerCreator() {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ export default function PlayerCreator() {
     if (inputRef.current && inputRef.current.value !== "") {
       dispatch(newName(inputRef.current?.value));
     }
+    dispatch(actions.enterRoom("room-id"));
   };
 
   if (userName !== "") {
@@ -18,9 +20,9 @@ export default function PlayerCreator() {
   }
 
   return (
-    <>
+    <div className="inputBox">
       <input ref={inputRef} />
       <button onClick={handleClick}>Confirm</button>
-    </>
+    </div>
   );
 }

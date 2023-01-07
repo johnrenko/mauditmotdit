@@ -32,25 +32,24 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <h1>Users</h1>
+      <div className="container">
+        <h2>Users</h2>
         <PlayerCreator />
         <PlayersList />
       </div>
 
-      <div>
-        <h1>Answer to guess</h1>
+      <div className="answerHighLevel">
         <Answer />
       </div>
 
-      <div>
-        <h1>Words guessed</h1>
+      <div className="container">
+        <h2>Words guessed</h2>
         <Guess />
         <GuessList />
       </div>
 
-      <div>
-        <h1>Tips given</h1>
+      <div className="container">
+        <h2>Tips given</h2>
         <Tips />
         <TipsList />
       </div>

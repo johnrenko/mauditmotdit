@@ -20,9 +20,9 @@ export default function Tips() {
     return <div>You can only give one tip.</div>;
   }
   return (
-    <>
+    <div className="inputBox">
       <input ref={inputRef} />
-      <button onClick={handleClick}>Send</button>
-    </>
+      <button onClick={handleClick}>Send tip</button>
+    </div>
   );
 }
