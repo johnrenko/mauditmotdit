@@ -1,13 +1,17 @@
 import { useRef } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
-import { addTip, selectHasGivenTips } from "../../app/slice";
+import {
+  addTip,
+  selectHasGivenTips,
+  selectUserIsGuessing,
+} from "../../app/slice";
 
 export default function Tips() {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
-  const hasGivenTip = useSelector(selectHasGivenTips);
+  const hasGivenTip = useAppSelector(selectHasGivenTips);
+  const isGuessing = useAppSelector(selectUserIsGuessing);
 
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
@@ -19,10 +23,13 @@ export default function Tips() {
   if (hasGivenTip) {
     return <div>You can only give one tip.</div>;
   }
-  return (
-    <div className="inputBox">
-      <input ref={inputRef} />
-      <button onClick={handleClick}>Send tip</button>
-    </div>
-  );
+  if (!isGuessing) {
+    return (
+      <div className="inputBox">
+        <input ref={inputRef} />
+        <button onClick={handleClick}>Send tip</button>
+      </div>
+    );
+  }
+  return <></>;
 }

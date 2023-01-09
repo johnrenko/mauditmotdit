@@ -19,15 +19,10 @@ export interface State {
     hasGuessed: boolean;
   };
   tips: { values: string[]; hasGivenTip: boolean };
-  liveblocks: {
-    others: [];
-    isStorageLoading: false;
-    connection: "open";
-  };
 }
 
 const initialState: State = {
-  answer: { word: getRandomWord(), tries: getRandomNumber() },
+  answer: { word: getRandomWord(), tries: getRandomNumber(5) },
   guess: { guessedWords: [] },
   player: {
     name: "",
@@ -38,11 +33,6 @@ const initialState: State = {
     hasGuessed: false,
   },
   tips: { values: [], hasGivenTip: false },
-  liveblocks: {
-    others: [],
-    isStorageLoading: false,
-    connection: "open",
-  },
 };
 
 export const slice = createSlice({
@@ -51,7 +41,7 @@ export const slice = createSlice({
   reducers: {
     newAnswer: (state) => {
       state.answer.word = getRandomWord();
-      state.answer.tries = getRandomNumber();
+      state.answer.tries = getRandomNumber(5);
     },
     guessAnswer: (state) => {
       state.answer.tries -= 1;
@@ -125,6 +115,7 @@ export const selectAnswerTries = (state: RootState) => state.answer.tries;
 export const selectGuessAnswers = (state: RootState) =>
   state.guess.guessedWords;
 
+export const selectUser = (state: RootState) => state.player;
 export const selectUserName = (state: RootState) => state.player.name;
 export const selectUserTries = (state: RootState) => state.player.triesLeft;
 export const selectUserGuesses = (state: RootState) => state.player.guesses;

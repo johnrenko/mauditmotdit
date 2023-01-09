@@ -4,8 +4,8 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getRandomNumber(): number {
-  return Math.floor(Math.random() * 5) + 1;
+export function getRandomNumber(x: number): number {
+  return Math.floor(Math.random() * x) + 1;
 }
 
 export function getRandomWord(): string {

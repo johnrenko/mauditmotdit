@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { newName, selectUserName } from "../../app/slice";
-import { actions } from "@liveblocks/redux";
 
 export default function PlayerCreator() {
   const dispatch = useAppDispatch();
@@ -12,7 +11,6 @@ export default function PlayerCreator() {
     if (inputRef.current && inputRef.current.value !== "") {
       dispatch(newName(inputRef.current?.value));
     }
-    dispatch(actions.enterRoom("room-id"));
   };
 
   if (userName !== "") {
