@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
 
-import { addTip, selectHasGivenTips } from "./tipsSlice";
+import { addTip, selectHasGivenTips } from "../../app/slice";
 
 export default function Tips() {
   const dispatch = useAppDispatch();

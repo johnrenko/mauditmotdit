@@ -1,9 +1,9 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { resetGuesses } from "../guess/guessSlice";
-import { newAnswer, selectAnswerTries, selectAnswerWord } from "./answerSlice";
-import { resetTips, resetGivenTip } from "../tips/tipsSlice";
+import { resetGuesses } from "../../app/slice";
+import { newAnswer, selectAnswerTries, selectAnswerWord } from "../../app/slice";
+import { resetTips, resetGivenTip } from "../../app/slice";
 import "./Answer.css";
-import { resetUser } from "../players/playerSlice";
+import { resetUser } from "../../app/slice";
 
 export default function Answer() {
   const answer = useAppSelector(selectAnswerWord);

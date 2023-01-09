@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { guessWord, selectGuessAnswers } from "./guessSlice";
+import { guessWord, selectGuessAnswers } from "../../app/slice";
 import {
   selectAnswerWord,
   guessAnswer,
   selectAnswerTries,
-} from "../answer/answerSlice";
-import { resetGivenTip } from "../tips/tipsSlice";
-import { addUserGuess, selectUserHasGuessed } from "../players/playerSlice";
+} from "../../app/slice";
+import { resetGivenTip } from "../../app/slice";
+import { addUserGuess, selectUserHasGuessed } from "../../app/slice";
 
 export default function Guess() {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export default function Guess() {
   const answers = useAppSelector(selectGuessAnswers);
   const userHasGuessed = useAppSelector(selectUserHasGuessed);
 
-  const hasValidItem = answers.some((item) => item.valid === true);
+  const hasValidItem = answers.some((item:any) => item.valid === true);
 
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
@@ -41,8 +41,8 @@ export default function Guess() {
   if (tries === 0) {
     return <div>You Failed.</div>;
   }
-  if (userHasGuessed){
-    return <div>Waiting for all users to guess a word.</div>
+  if (userHasGuessed) {
+    return <div>Waiting for all users to guess a word.</div>;
   }
   return (
     <div className="inputBox">

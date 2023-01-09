@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectGuessAnswers } from "./guessSlice";
+import { selectGuessAnswers } from "../../app/slice";
 
 export default function GuessList() {
   const guesses = useAppSelector(selectGuessAnswers);

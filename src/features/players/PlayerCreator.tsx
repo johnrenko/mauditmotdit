@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { newName, selectUserName } from "./playerSlice";
+import { newName, selectUserName } from "../../app/slice";
 import { actions } from "@liveblocks/redux";
 
 export default function PlayerCreator() {
