@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { guessWord, selectGuessAnswers } from "../../app/slice";
+import { guessWord, selectGuesses } from "../../app/slice";
 import {
   selectAnswerWord,
   guessAnswer,
@@ -15,10 +15,12 @@ export default function Guess() {
   const inputRef = useRef<HTMLInputElement>(null);
   const answer = useAppSelector(selectAnswerWord);
   const tries = useAppSelector(selectAnswerTries);
-  const answers = useAppSelector(selectGuessAnswers);
+  const answers = useAppSelector(selectGuesses);
   const user = useAppSelector(selectUser);
 
-  const hasValidItem = answers.some((item:any) => item.valid === true);
+  const hasValidItem = answers.guessedWords.some(
+    (item: any) => item.valid === true
+  );
 
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
@@ -26,6 +28,7 @@ export default function Guess() {
         guessWord({
           value: inputRef.current.value,
           valid: inputRef.current.value.toLowerCase() === answer.toLowerCase(),
+          guesser: user.name,
         })
       );
       dispatch(guessAnswer());

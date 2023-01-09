@@ -5,11 +5,12 @@ import { getRandomNumber, getRandomWord } from "../utils/utils";
 export interface Guess {
   value: string;
   valid: boolean;
+  guesser: string;
 }
 
 export interface State {
   answer: { word: string; tries: number };
-  guess: { guessedWords: Guess[] };
+  guess: { guessedWords: Guess[]; everybodyHasGuessed: boolean };
   player: {
     name: string;
     guesses: string[];
@@ -20,11 +21,12 @@ export interface State {
     status: "idle" | "ready" | "playing";
   };
   tips: { values: string[]; hasGivenTip: boolean };
+  gameStatus: "waiting" | "started";
 }
 
 const initialState: State = {
   answer: { word: getRandomWord(), tries: getRandomNumber(5) },
-  guess: { guessedWords: [] },
+  guess: { guessedWords: [], everybodyHasGuessed: false },
   player: {
     name: "",
     guesses: [],
@@ -35,6 +37,7 @@ const initialState: State = {
     status: "idle",
   },
   tips: { values: [], hasGivenTip: false },
+  gameStatus: "waiting",
 };
 
 export const slice = createSlice({
@@ -74,6 +77,9 @@ export const slice = createSlice({
       state.player.triesLeft--;
       state.player.hasGuessed = true;
     },
+    addEverybodyHasGuessed: (state) => {
+      state.guess.everybodyHasGuessed = true;
+    },
     resetUser: (state) => {
       state.player.guesses = [];
       state.player.triesLeft = 0;
@@ -91,8 +97,17 @@ export const slice = createSlice({
     resetGivenTip: (state) => {
       state.tips.hasGivenTip = false;
     },
+    resetHasGuessed: (state) => {
+      state.player.hasGuessed = false;
+    },
+    resetEverybodyHasGuessed: (state) => {
+      state.guess.everybodyHasGuessed = false;
+    },
     startGame: (state) => {
       state.player.status = "ready";
+    },
+    launchGame: (state) => {
+      state.gameStatus = "started";
     },
   },
 });
@@ -102,6 +117,7 @@ export const {
   guessAnswer,
   guessWord,
   resetGuesses,
+  addEverybodyHasGuessed,
   newName,
   updateTriesLeft,
   hasWon,
@@ -112,18 +128,22 @@ export const {
   addTip,
   resetTips,
   resetGivenTip,
+  resetHasGuessed,
+  resetEverybodyHasGuessed,
   startGame,
+  launchGame,
 } = slice.actions;
 
 export const selectAnswerWord = (state: RootState) => state.answer.word;
 export const selectAnswerTries = (state: RootState) => state.answer.tries;
 
-export const selectGuessAnswers = (state: RootState) =>
-  state.guess.guessedWords;
+export const selectGuesses = (state: RootState) => state.guess;
 
 export const selectUser = (state: RootState) => state.player;
 
 export const selectTipsValue = (state: RootState) => state.tips.values;
 export const selectHasGivenTips = (state: RootState) => state.tips.hasGivenTip;
+
+export const selectGameStatus = (state: RootState) => state.gameStatus;
 
 export default slice.reducer;

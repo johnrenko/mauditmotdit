@@ -11,12 +11,15 @@ import Tips from "./features/tips/Tips";
 import TipsList from "./features/tips/TipsList";
 import PlayersList from "./features/players/PlayersList";
 import PlayerCreator from "./features/players/PlayerCreator";
+import { selectGameStatus, selectUser } from "./app/slice";
 
 function App() {
   const dispatch = useAppDispatch();
   const connection = useAppSelector(
     (state: any) => state.liveblocks.isStorageLoading
   );
+  const user = useAppSelector(selectUser);
+  const gameStatus = useAppSelector(selectGameStatus);
 
   useEffect(() => {
     dispatch(actions.enterRoom("room-id"));
@@ -32,27 +35,30 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container">
-        <h2>Users</h2>
-        <PlayerCreator />
-        <PlayersList />
-      </div>
+      {gameStatus !== "started" ? (
+        <div className="container">
+          <h2>Users</h2>
+          {user.name === "" ? <PlayerCreator /> : <PlayersList />}
+        </div>
+      ) : null}
 
-      <div className="answerHighLevel">
-        <Answer />
-      </div>
-
-      <div className="container">
-        <h2>Words guessed</h2>
-        <Guess />
-        <GuessList />
-      </div>
-
-      <div className="container">
-        <h2>Tips given</h2>
-        <Tips />
-        <TipsList />
-      </div>
+      {gameStatus === "started" ? (
+        <>
+          <div className="answerHighLevel">
+            <Answer />
+          </div>
+          <div className="container">
+            <h2>Words guessed</h2>
+            <Guess />
+            <GuessList />
+          </div>
+          <div className="container">
+            <h2>Tips given</h2>
+            <Tips />
+            <TipsList />
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

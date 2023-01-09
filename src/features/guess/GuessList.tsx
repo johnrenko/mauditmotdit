@@ -1,14 +1,14 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectGuessAnswers } from "../../app/slice";
+import { selectGuesses } from "../../app/slice";
 
 export default function GuessList() {
-  const guesses = useAppSelector(selectGuessAnswers);
+  const guesses = useAppSelector(selectGuesses);
 
   return (
     <ul>
-      {guesses.map((guess, index) => (
+      {guesses.guessedWords.map((guess, index) => (
         <li key={index} style={{ color: guess.valid ? "green" : "red" }}>
-          {guess.value}
+          {guess.value} - {guess.guesser}
         </li>
       ))}
     </ul>

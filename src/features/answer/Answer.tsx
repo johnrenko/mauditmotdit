@@ -37,6 +37,6 @@ export default function Answer() {
       </div>
     );
   } else {
-    return <div>You are not the driver.</div>
+    return <div>You are not the driver.</div>;
   }
 }
