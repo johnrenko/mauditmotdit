@@ -17,6 +17,7 @@ export interface State {
     isWinner: boolean;
     isGuessing: boolean;
     hasGuessed: boolean;
+    status: "idle" | "ready" | "playing";
   };
   tips: { values: string[]; hasGivenTip: boolean };
 }
@@ -31,6 +32,7 @@ const initialState: State = {
     isWinner: false,
     isGuessing: true,
     hasGuessed: false,
+    status: "idle",
   },
   tips: { values: [], hasGivenTip: false },
 };
@@ -89,6 +91,9 @@ export const slice = createSlice({
     resetGivenTip: (state) => {
       state.tips.hasGivenTip = false;
     },
+    startGame: (state) => {
+      state.player.status = "ready";
+    },
   },
 });
 
@@ -107,6 +112,7 @@ export const {
   addTip,
   resetTips,
   resetGivenTip,
+  startGame,
 } = slice.actions;
 
 export const selectAnswerWord = (state: RootState) => state.answer.word;
@@ -116,14 +122,6 @@ export const selectGuessAnswers = (state: RootState) =>
   state.guess.guessedWords;
 
 export const selectUser = (state: RootState) => state.player;
-export const selectUserName = (state: RootState) => state.player.name;
-export const selectUserTries = (state: RootState) => state.player.triesLeft;
-export const selectUserGuesses = (state: RootState) => state.player.guesses;
-export const selectUserIsGuessing = (state: RootState) =>
-  state.player.isGuessing;
-export const selectUserWin = (state: RootState) => state.player.isWinner;
-export const selectUserHasGuessed = (state: RootState) =>
-  state.player.hasGuessed;
 
 export const selectTipsValue = (state: RootState) => state.tips.values;
 export const selectHasGivenTips = (state: RootState) => state.tips.hasGivenTip;

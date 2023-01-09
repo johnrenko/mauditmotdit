@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { resetGuesses, selectUserIsGuessing } from "../../app/slice";
+import { resetGuesses, selectUser } from "../../app/slice";
 import {
   newAnswer,
   selectAnswerTries,
@@ -12,7 +12,7 @@ import { resetUser } from "../../app/slice";
 export default function Answer() {
   const answer = useAppSelector(selectAnswerWord);
   const tries = useAppSelector(selectAnswerTries);
-  const isGuessing = useAppSelector(selectUserIsGuessing);
+  const player = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
@@ -23,7 +23,7 @@ export default function Answer() {
     dispatch(resetUser());
   };
 
-  if (!isGuessing) {
+  if (!player.isGuessing) {
     return (
       <div className="answerBox">
         <h2>Mot à deviner</h2>

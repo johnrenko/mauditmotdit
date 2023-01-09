@@ -8,7 +8,7 @@ import {
   selectAnswerTries,
 } from "../../app/slice";
 import { resetGivenTip } from "../../app/slice";
-import { addUserGuess, selectUserHasGuessed } from "../../app/slice";
+import { addUserGuess, selectUser } from "../../app/slice";
 
 export default function Guess() {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ export default function Guess() {
   const answer = useAppSelector(selectAnswerWord);
   const tries = useAppSelector(selectAnswerTries);
   const answers = useAppSelector(selectGuessAnswers);
-  const userHasGuessed = useAppSelector(selectUserHasGuessed);
+  const user = useAppSelector(selectUser);
 
   const hasValidItem = answers.some((item:any) => item.valid === true);
 
@@ -41,7 +41,7 @@ export default function Guess() {
   if (tries === 0) {
     return <div>You Failed.</div>;
   }
-  if (userHasGuessed) {
+  if (user.hasGuessed) {
     return <div>Waiting for all users to guess a word.</div>;
   }
   return (

@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { newName, selectUserName } from "../../app/slice";
+import { newName, selectUser } from "../../app/slice";
 
 export default function PlayerCreator() {
   const dispatch = useAppDispatch();
-  const userName = useAppSelector(selectUserName);
+  const user = useAppSelector(selectUser);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -13,8 +13,8 @@ export default function PlayerCreator() {
     }
   };
 
-  if (userName !== "") {
-    return <span>Your name is {userName}</span>;
+  if (user.name !== "") {
+    return <span>Your name is {user.name}</span>;
   }
 
   return (

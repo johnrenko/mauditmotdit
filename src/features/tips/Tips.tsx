@@ -4,14 +4,14 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addTip,
   selectHasGivenTips,
-  selectUserIsGuessing,
+  selectUser,
 } from "../../app/slice";
 
 export default function Tips() {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
   const hasGivenTip = useAppSelector(selectHasGivenTips);
-  const isGuessing = useAppSelector(selectUserIsGuessing);
+  const user = useAppSelector(selectUser);
 
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
@@ -23,7 +23,7 @@ export default function Tips() {
   if (hasGivenTip) {
     return <div>You can only give one tip.</div>;
   }
-  if (!isGuessing) {
+  if (!user.isGuessing) {
     return (
       <div className="inputBox">
         <input ref={inputRef} />

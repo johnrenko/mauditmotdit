@@ -1,9 +1,9 @@
 import { useAppSelector } from "../../app/hooks";
-import { selectUserName } from "../../app/slice";
+import { selectUser } from "../../app/slice";
 
 export default function PlayersList() {
   const others = useAppSelector((state: any) => state.liveblocks.others);
-  const userName = useAppSelector(selectUserName);
+  const user = useAppSelector(selectUser);
 
   if (others.length === 0) {
     return <div>You are alone</div>;
@@ -13,7 +13,7 @@ export default function PlayersList() {
     <div>
       There are {others.length + 1} players :{" "}
       <ul>
-        <li>{userName} (You)</li>
+        <li>{user.name} (You)</li>
         {others.map((user: any, index: number) => (
           <li key={index}>
             {user.presence?.player?.name !== "" ? (
