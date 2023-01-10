@@ -46,15 +46,15 @@ function App() {
     }
   }, [driver, user, dispatch]);
 
-  // useEffect(() => {
-  //   console.log("Someone left", others);
-  //   if (
-  //     user.id !== driver?.id &&
-  //     others.some((other: any) => other.presence.id !== driver?.id)
-  //   ) {
-  //     console.log("no more driver");
-  //   }
-  // }, [others, driver?.id, user, dispatch]);
+  useEffect(() => {
+    console.log("Someone left", others);
+    if (
+      user.id !== driver?.id &&
+      others.some((other: any) => other.presence.id !== driver?.id)
+    ) {
+      console.log("no more driver");
+    }
+  }, [others, driver?.id, user, dispatch]);
 
   if (connection) {
     return <div>Loading please wait...</div>;
