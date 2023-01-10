@@ -11,7 +11,14 @@ import Tips from "./features/tips/Tips";
 import TipsList from "./features/tips/TipsList";
 import PlayersList from "./features/players/PlayersList";
 import PlayerCreator from "./features/players/PlayerCreator";
-import { selectGameStatus, selectUser } from "./app/slice";
+import {
+  isDriver,
+  isGuesser,
+  selectDriver,
+  selectGameStatus,
+  selectOthers,
+  selectUser,
+} from "./app/slice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -20,6 +27,8 @@ function App() {
   );
   const user = useAppSelector(selectUser);
   const gameStatus = useAppSelector(selectGameStatus);
+  const driver = useAppSelector(selectDriver);
+  const others = useAppSelector(selectOthers);
 
   useEffect(() => {
     dispatch(actions.enterRoom("room-id"));
@@ -28,6 +37,24 @@ function App() {
       dispatch(actions.leaveRoom("room-id"));
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (driver?.id === user.id) {
+      dispatch(isDriver());
+    } else {
+      dispatch(isGuesser());
+    }
+  }, [driver, user, dispatch]);
+
+  // useEffect(() => {
+  //   console.log("Someone left", others);
+  //   if (
+  //     user.id !== driver?.id &&
+  //     others.some((other: any) => other.presence.id !== driver?.id)
+  //   ) {
+  //     console.log("no more driver");
+  //   }
+  // }, [others, driver?.id, user, dispatch]);
 
   if (connection) {
     return <div>Loading please wait...</div>;

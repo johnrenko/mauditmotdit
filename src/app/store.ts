@@ -14,7 +14,7 @@ export const store = configureStore({
     liveblocksEnhancer<State>({
       client,
       presenceMapping: { player: true },
-      storageMapping: { answer: true, guess: true, tips: true },
+      storageMapping: { answer: true, guess: true, tips: true, isDriver: true, gameStatus: true },
     }),
   ],
 });

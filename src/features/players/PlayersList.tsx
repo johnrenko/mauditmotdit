@@ -9,10 +9,13 @@ import {
   resetGuesses,
   resetTips,
   resetUser,
+  newDriver,
+  selectOthers,
 } from "../../app/slice";
+import { getRandomNumber } from "../../utils/utils";
 
 export default function PlayersList() {
-  const others = useAppSelector((state: any) => state.liveblocks.others);
+  const others = useAppSelector(selectOthers);
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -28,7 +31,7 @@ export default function PlayersList() {
       dispatch(resetGivenTip());
       dispatch(resetUser());
     }
-  }, [user.status, others, dispatch]);
+  }, [user, others, dispatch]);
 
   if (others.length === 0) {
     return <div>You are alone</div>;
@@ -36,6 +39,18 @@ export default function PlayersList() {
 
   const handleClick = () => {
     dispatch(startGame());
+
+    const playersList = [
+      { name: user.name, id: user.id },
+      ...others.map((other: any) => {
+        return {
+          name: other.presence.player.name,
+          id: other.presence.player.id,
+        };
+      }),
+    ];
+
+    dispatch(newDriver(playersList[getRandomNumber(playersList.length) - 1]));
   };
 
   return (

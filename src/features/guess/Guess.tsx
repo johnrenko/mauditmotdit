@@ -5,6 +5,8 @@ import {
   guessWord,
   resetHasGuessed,
   selectGuesses,
+  selectHasGivenTips,
+  selectOthers,
   setEverybodyHasGuessed,
 } from "../../app/slice";
 import {
@@ -22,14 +24,18 @@ export default function Guess() {
   const tries = useAppSelector(selectAnswerTries);
   const answers = useAppSelector(selectGuesses);
   const user = useAppSelector(selectUser);
-  const others = useAppSelector((state: any) => state.liveblocks.others);
+  const hasGivenTip = useAppSelector(selectHasGivenTips);
+  const others = useAppSelector(selectOthers);
 
   const hasValidItem = answers.guessedWords.some(
     (item: any) => item.valid === true
   );
 
   useEffect(() => {
-    dispatch(resetHasGuessed());
+    if (answers.everybodyHasGuessed) {
+      dispatch(resetHasGuessed());
+      dispatch(resetGivenTip());
+    }
   }, [answers.everybodyHasGuessed, dispatch]);
 
   const handleClick = () => {
@@ -41,24 +47,40 @@ export default function Guess() {
           guesser: user.name,
         })
       );
-      dispatch(guessAnswer());
-      dispatch(resetGivenTip());
       dispatch(addUserGuess(inputRef.current.value));
       inputRef.current.value = "";
-      if (others.every((other: any) => other.presence.player.hasGuessed)) {
+      if (
+        others
+          .filter((other: any) => other.presence.player.isGuessing)
+          .every((other: any) => other.presence.player.hasGuessed)
+      ) {
         dispatch(setEverybodyHasGuessed());
+        dispatch(guessAnswer());
       }
     }
   };
 
   if (hasValidItem) {
-    return <div>You win.</div>;
+    return (
+      <div>
+        {answers.guessedWords
+          .filter((answer) => answer.valid)
+          .map((value) => value.guesser)}{" "}
+        win.
+      </div>
+    );
   }
   if (tries === 0) {
     return <div>You Failed.</div>;
   }
   if (user.hasGuessed) {
     return <div>Waiting for all users to guess a word.</div>;
+  }
+  if (!hasGivenTip) {
+    return <div>Waiting for a tip.</div>;
+  }
+  if(!user.isGuessing){
+    return <div>You are the driver.</div>
   }
   return (
     <div className="inputBox">

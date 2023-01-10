@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
-import { getRandomNumber, getRandomWord } from "../utils/utils";
+import {
+  generateUniqueId,
+  getRandomNumber,
+  getRandomWord,
+} from "../utils/utils";
 
 export interface Guess {
   value: string;
@@ -8,20 +12,29 @@ export interface Guess {
   guesser: string;
 }
 
+export interface Driver {
+  name: string;
+  id: string;
+}
+
+export interface Player {
+  name: string;
+  guesses: string[];
+  triesLeft: number;
+  isWinner: boolean;
+  isGuessing: boolean;
+  hasGuessed: boolean;
+  status: "idle" | "ready" | "playing";
+  id: string;
+}
+
 export interface State {
   answer: { word: string; tries: number };
   guess: { guessedWords: Guess[]; everybodyHasGuessed: boolean };
-  player: {
-    name: string;
-    guesses: string[];
-    triesLeft: number;
-    isWinner: boolean;
-    isGuessing: boolean;
-    hasGuessed: boolean;
-    status: "idle" | "ready" | "playing";
-  };
+  player: Player;
   tips: { values: string[]; hasGivenTip: boolean };
   gameStatus: "waiting" | "started";
+  isDriver?: Driver;
 }
 
 const initialState: State = {
@@ -35,6 +48,7 @@ const initialState: State = {
     isGuessing: true,
     hasGuessed: false,
     status: "idle",
+    id: generateUniqueId(),
   },
   tips: { values: [], hasGivenTip: false },
   gameStatus: "waiting",
@@ -110,6 +124,9 @@ export const slice = createSlice({
     launchGame: (state) => {
       state.gameStatus = "started";
     },
+    newDriver: (state, action: PayloadAction<Driver>) => {
+      state.isDriver = action.payload;
+    },
   },
 });
 
@@ -133,6 +150,7 @@ export const {
   resetEverybodyHasGuessed,
   startGame,
   launchGame,
+  newDriver,
 } = slice.actions;
 
 export const selectAnswerWord = (state: RootState) => state.answer.word;
@@ -146,5 +164,9 @@ export const selectTipsValue = (state: RootState) => state.tips.values;
 export const selectHasGivenTips = (state: RootState) => state.tips.hasGivenTip;
 
 export const selectGameStatus = (state: RootState) => state.gameStatus;
+
+export const selectDriver = (state: RootState) => state.isDriver;
+
+export const selectOthers = (state: any) => state.liveblocks.others;
 
 export default slice.reducer;

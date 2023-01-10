@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
   addTip,
+  resetEverybodyHasGuessed,
   selectHasGivenTips,
   selectUser,
 } from "../../app/slice";
@@ -17,6 +18,7 @@ export default function Tips() {
     if (inputRef.current && inputRef.current.value !== "") {
       dispatch(addTip(inputRef.current.value));
       inputRef.current.value = "";
+      dispatch(resetEverybodyHasGuessed());
     }
   };
 

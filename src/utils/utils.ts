@@ -22,3 +22,9 @@ export function stripAccents(str: string) {
     .replace(/[ýÿ]/g, "y")
     .replace(/[çćč]/g, "c");
 }
+
+export function generateUniqueId() {
+  const array = new Uint32Array(1);
+  window.crypto.getRandomValues(array);
+  return array[0].toString();
+}
