@@ -56,6 +56,7 @@ export const slice = createSlice({
     },
     resetGuesses: (state) => {
       state.guess.guessedWords = [];
+      state.guess.everybodyHasGuessed = false;
     },
     newName: (state, action: PayloadAction<string>) => {
       state.player.name = action.payload;
@@ -77,7 +78,7 @@ export const slice = createSlice({
       state.player.triesLeft--;
       state.player.hasGuessed = true;
     },
-    addEverybodyHasGuessed: (state) => {
+    setEverybodyHasGuessed: (state) => {
       state.guess.everybodyHasGuessed = true;
     },
     resetUser: (state) => {
@@ -117,7 +118,7 @@ export const {
   guessAnswer,
   guessWord,
   resetGuesses,
-  addEverybodyHasGuessed,
+  setEverybodyHasGuessed,
   newName,
   updateTriesLeft,
   hasWon,

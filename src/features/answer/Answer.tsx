@@ -23,7 +23,7 @@ export default function Answer() {
     dispatch(resetUser());
   };
 
-  if (!player.isGuessing) {
+  if (player.isGuessing) {
     return (
       <div className="answerBox">
         <h2>Mot à deviner</h2>

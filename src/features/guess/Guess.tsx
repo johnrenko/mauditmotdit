@@ -1,7 +1,12 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import { guessWord, selectGuesses } from "../../app/slice";
+import {
+  guessWord,
+  resetHasGuessed,
+  selectGuesses,
+  setEverybodyHasGuessed,
+} from "../../app/slice";
 import {
   selectAnswerWord,
   guessAnswer,
@@ -17,10 +22,15 @@ export default function Guess() {
   const tries = useAppSelector(selectAnswerTries);
   const answers = useAppSelector(selectGuesses);
   const user = useAppSelector(selectUser);
+  const others = useAppSelector((state: any) => state.liveblocks.others);
 
   const hasValidItem = answers.guessedWords.some(
     (item: any) => item.valid === true
   );
+
+  useEffect(() => {
+    dispatch(resetHasGuessed());
+  }, [answers.everybodyHasGuessed, dispatch]);
 
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
@@ -35,6 +45,9 @@ export default function Guess() {
       dispatch(resetGivenTip());
       dispatch(addUserGuess(inputRef.current.value));
       inputRef.current.value = "";
+      if (others.every((other: any) => other.presence.player.hasGuessed)) {
+        dispatch(setEverybodyHasGuessed());
+      }
     }
   };
 
