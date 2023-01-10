@@ -1,5 +1,11 @@
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { resetGuesses, selectUser } from "../../app/slice";
+import {
+  newDriver,
+  resetGuesses,
+  selectDriver,
+  selectOthers,
+  selectUser,
+} from "../../app/slice";
 import {
   newAnswer,
   selectAnswerTries,
@@ -8,11 +14,14 @@ import {
 import { resetTips, resetGivenTip } from "../../app/slice";
 import "./Answer.css";
 import { resetUser } from "../../app/slice";
+import { getRandomNumber } from "../../utils/utils";
 
 export default function Answer() {
   const answer = useAppSelector(selectAnswerWord);
   const tries = useAppSelector(selectAnswerTries);
-  const player = useAppSelector(selectUser);
+  const user = useAppSelector(selectUser);
+  const others = useAppSelector(selectOthers);
+  const driver = useAppSelector(selectDriver);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
@@ -21,9 +30,21 @@ export default function Answer() {
     dispatch(resetTips());
     dispatch(resetGivenTip());
     dispatch(resetUser());
+
+    const playersList = [
+      { name: user.name, id: user.id },
+      ...others.map((other: any) => {
+        return {
+          name: other.presence.player.name,
+          id: other.presence.player.id,
+        };
+      }),
+    ];
+
+    dispatch(newDriver(playersList[getRandomNumber(playersList.length) - 1]));
   };
 
-  if (player.isGuessing) {
+  if (!user.isGuessing) {
     return (
       <div className="answerBox">
         <h2>Mot à deviner</h2>
@@ -32,11 +53,11 @@ export default function Answer() {
             <span className="answer">{answer}</span>
             <span className="tries">{tries}</span>
           </div>
-          <button onClick={handleClick}>Refresh</button>
+          <button onClick={handleClick}>Next round</button>
         </div>
       </div>
     );
   } else {
-    return <div>You are not the driver.</div>;
+    return <div>{driver?.name} is the driver.</div>;
   }
 }
