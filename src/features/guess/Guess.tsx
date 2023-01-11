@@ -71,7 +71,7 @@ export default function Guess() {
     );
   }
   if (tries === 0) {
-    return <div>You Failed.</div>;
+    return <div>Perdu. Le mot était {answer}.</div>;
   }
   if (user.hasGuessed) {
     return <div>Waiting for all users to guess a word.</div>;
