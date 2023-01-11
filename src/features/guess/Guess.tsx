@@ -16,6 +16,7 @@ import {
 } from "../../app/slice";
 import { resetGivenTip } from "../../app/slice";
 import { addUserGuess, selectUser } from "../../app/slice";
+import { stripAccents } from "../../utils/utils";
 
 export default function Guess() {
   const dispatch = useAppDispatch();
@@ -43,7 +44,9 @@ export default function Guess() {
       dispatch(
         guessWord({
           value: inputRef.current.value,
-          valid: inputRef.current.value.toLowerCase() === answer.toLowerCase(),
+          valid:
+            stripAccents(inputRef.current.value.toLowerCase().trim()) ===
+            answer.toLowerCase(),
           guesser: user.name,
         })
       );
@@ -79,8 +82,8 @@ export default function Guess() {
   if (!hasGivenTip) {
     return <div>Waiting for a tip.</div>;
   }
-  if(!user.isGuessing){
-    return <div>You are the driver.</div>
+  if (!user.isGuessing) {
+    return <div>You are the driver.</div>;
   }
   return (
     <div className="inputBox">
