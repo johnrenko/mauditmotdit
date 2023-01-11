@@ -16,9 +16,9 @@ import {
   isGuesser,
   selectDriver,
   selectGameStatus,
-  selectOthers,
   selectUser,
 } from "./app/slice";
+import { generateRandomString } from "./utils/utils";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,15 +28,20 @@ function App() {
   const user = useAppSelector(selectUser);
   const gameStatus = useAppSelector(selectGameStatus);
   const driver = useAppSelector(selectDriver);
-  const others = useAppSelector(selectOthers);
+
+  const url = new URL(window.location.href);
+  const params = url.searchParams;
+  const room = params.get("room") || generateRandomString(10).toString();
+  params.set("room", room);
+  window.history.pushState({}, "", url.href);
 
   useEffect(() => {
-    dispatch(actions.enterRoom("room-id"));
+    dispatch(actions.enterRoom(room));
 
     return () => {
-      dispatch(actions.leaveRoom("room-id"));
+      dispatch(actions.leaveRoom(room));
     };
-  }, [dispatch]);
+  }, [room, dispatch]);
 
   useEffect(() => {
     if (driver?.id === user.id) {
@@ -45,16 +50,6 @@ function App() {
       dispatch(isGuesser());
     }
   }, [driver, user, dispatch]);
-
-  useEffect(() => {
-    console.log("Someone left", others);
-    if (
-      user.id !== driver?.id &&
-      others.some((other: any) => other.presence.id !== driver?.id)
-    ) {
-      console.log("no more driver");
-    }
-  }, [others, driver?.id, user, dispatch]);
 
   if (connection) {
     return <div>Loading please wait...</div>;
