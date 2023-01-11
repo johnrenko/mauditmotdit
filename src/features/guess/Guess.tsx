@@ -46,7 +46,7 @@ export default function Guess() {
           value: inputRef.current.value,
           valid:
             stripAccents(inputRef.current.value.toLowerCase().trim()) ===
-            answer.toLowerCase(),
+            stripAccents(answer.toLowerCase().trim()),
           guesser: user.name,
         })
       );
