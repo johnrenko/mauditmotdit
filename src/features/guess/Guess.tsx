@@ -39,6 +39,12 @@ export default function Guess() {
     }
   }, [answers.everybodyHasGuessed, dispatch]);
 
+  const handleInputKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
+  };
+
   const handleClick = () => {
     if (inputRef.current && inputRef.current.value !== "") {
       dispatch(
@@ -87,7 +93,7 @@ export default function Guess() {
   }
   return (
     <div className="inputBox">
-      <input ref={inputRef} />
+      <input ref={inputRef} onKeyDown={handleInputKeyDown} />
       <button onClick={handleClick}>Guess</button>
     </div>
   );

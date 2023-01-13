@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import logo from "./static/Logo_shadow.svg";
+import BG_Top from "./static/BG_Top.svg";
+import BG_Bottom from "./static/BG_Back.svg";
 
 import { actions } from "@liveblocks/redux";
 
@@ -57,9 +60,9 @@ function App() {
 
   return (
     <div className="App">
+      <img src={logo} alt="Logo" className="logo"/>
       {gameStatus !== "started" ? (
         <div className="container">
-          <h2>Users</h2>
           {user.name === "" ? <PlayerCreator /> : <PlayersList />}
         </div>
       ) : null}
@@ -81,6 +84,8 @@ function App() {
           </div>
         </>
       ) : null}
+       <img src={BG_Top} alt="BG_Top" className="BG_Top"/>
+        <img src={BG_Bottom} alt="BG_Bottom" className="BG_Bottom"/>
     </div>
   );
 }
